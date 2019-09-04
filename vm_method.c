@@ -265,12 +265,14 @@ rb_method_definition_set(const rb_method_entry_t *me, rb_method_definition_t *de
 		rb_control_frame_t *cfp;
 		int line;
 
+        // 変数セット?
 		def->body.attr.id = (ID)(VALUE)opts;
 
 		cfp = rb_vm_get_ruby_level_next_cfp(ec, ec->cfp);
 
 		if (cfp && (line = rb_vm_get_sourceline(cfp))) {
 		    VALUE location = rb_ary_new3(2, rb_iseq_path(cfp->iseq), INT2FIX(line));
+            // これ何やってるのか気になる
 		    RB_OBJ_WRITE(me, &def->body.attr.location, rb_ary_freeze(location));
 		}
 		else {
